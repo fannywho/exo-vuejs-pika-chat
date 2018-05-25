@@ -32,6 +32,7 @@ export default {
       .auth()
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(user => {
+        console.log('user', user)
         usersRef.child(user.user.uid).set({
           uid: user.user.uid,
           displayName: this.name,

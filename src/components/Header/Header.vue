@@ -39,9 +39,6 @@ export default {
     onSignOut: Function,
     loggedIn: Boolean,
   },
-  created() {
-    console.log('loggedin', this.loggedIn)
-  }
 };
 </script>
 
