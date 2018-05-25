@@ -4,22 +4,20 @@
     <form>
       <label for="displayName">Username</label>
       <input
-      v-bind:displayName="displayName"
-      v-model="displayName"
-      placeholder="Username"
-      id="displayName"
-      type="text"
-      class="input-field validate"
-       />
+        v-bind:displayName="displayName"
+        v-model="displayName"
+        placeholder="Username"
+        id="displayName"
+        type="text"
+        class="input-field validate" />
       <label for="mail">E-mail</label>
       <input
-      v-bind:email="email"
-      v-model="email"
-      placeholder="e-mail"
-      id="mail"
-      type="email"
-      class="input-field validate"
-      />
+        :email="email"
+        v-model="email"
+        placeholder="e-mail"
+        id="mail"
+        type="email"
+        class="input-field validate" />
       <div class="file-field input-field">
         <div class="btn">
           <span>Profile picture</span>
@@ -33,7 +31,7 @@
           <input class="file-path validate" type="text">
         </div>
       </div>
-      <button v-bind:class="{ disabled: disabled }" class="waves-effect waves-light btn-large right" @click.prevent="updateUserProfile">Update</button>
+      <button :class="{ disabled: disabled }" class="waves-effect waves-light btn-large right" @click.prevent="updateUserProfile">Update</button>
     </form>
   </div>
 </template>
@@ -54,27 +52,26 @@ export default {
       displayName: null,
       email: null,
       profilePic: null,
-      isLoading: false,
       max_size: 1000000,
       disabled: false,
     }
   },
   methods: {
     updateUserProfile() {
-      console.log('pic', this.profilePic)
       usersRef.child(this.currentUser.uid).update({
         displayName: this.displayName,
         email: this.email,
         profilePic: this.profilePic,
       });
+
+
       this.currentUser.updateProfile({
-        displayName: this.name,
+        displayName: this.displayName,
         email: this.email,
         photoUrl: this.profilePic,
       }).catch(function(error) {
         alert(error)
       });
-      this.hasChange = false;
     },
     uploadPicture() {
       const picture = this.$refs.profilePic.files[0];
@@ -94,12 +91,10 @@ export default {
       .then(res => {
         this.profilePic = res.data.data.link;
         console.log(this.profile_pic)
-        this.isLoading = false;
         this.disabled = false;
       })
       .catch(err => {
         console.log(err);
-        this.isLoading = false;
       });
     },
   },

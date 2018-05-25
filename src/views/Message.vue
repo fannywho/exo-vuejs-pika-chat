@@ -23,57 +23,61 @@
 </template>
 
 <script>
-import { firebaseApp, database, messageRef } from '../../firebase.config';
-  export default {
-    name: 'Message',
-    props: {
-      message: {
-        type: Object,
-        required: false,
-        default: 'no message',
-      },
+import {
+  firebaseApp,
+  messageRef,
+} from '../../firebase.config';
+
+export default {
+  name: 'Message',
+  props: {
+    message: {
+      type: Object,
+      required: false,
+      default: 'no message',
     },
-    data() {
-      return {
-        user: '',
-        id: '',
-        text: '',
-        currentUser: '',
-        edit: false,
-        isMe: false,
+  },
+  data() {
+    return {
+      user: '',
+      id: '',
+      text: '',
+      currentUser: '',
+      edit: false,
+      isMe: false,
+    }
+  },
+  methods: {
+    onDelete(message) {
+      if (this.currentUser && this.currentUser.displayName === message.user) {
+        messageRef.child(message.id).remove();
+      } else {
+        alert('Pas les droits ! è__é')
       }
     },
-    methods: {
-      onDelete(message) {
-        if (this.currentUser && this.currentUser.displayName === message.user) {
-          messageRef.child(message.id).remove();
-        } else {
-          alert('pas les droits !')
-        }
-      },
-      onUpdate(message) {
-        if (this.currentUser && this.currentUser.displayName === message.user) {
-          this.edit = true;
-        } else {
-          alert('Pas les droits pour éditer')
-        }
-      },
-      onValid(id, message){
-        messageRef.child(id).update({text: message});
-        this.edit = false;
-      },
-      onCancel(){
-        this.edit = false;
-        this.text = this.message.text;
+    onUpdate(message) {
+      if (this.currentUser && this.currentUser.displayName === message.user) {
+        this.edit = true;
+      } else {
+        alert('Pas les droits pour éditer ! è__é')
       }
     },
-    created() {
+    onValid(id, message){
+      messageRef.child(id).update({text: message});
+      this.edit = false;
+    },
+    onCancel(){
+      this.edit = false;
       this.text = this.message.text;
-      this.user = this.message.user;
-      this.currentUser = firebaseApp.auth().currentUser;
-      this.isMe = firebaseApp.auth().currentUser.displayName === this.message.user;
-    },
-  }
+    }
+  },
+  created() {
+    this.text = this.message.text;
+    this.user = this.message.user;
+    this.currentUser = firebaseApp.auth().currentUser;
+    this.isMe = firebaseApp.auth().currentUser.displayName === this.message.user;
+  },
+}
 </script>
 
 <style>

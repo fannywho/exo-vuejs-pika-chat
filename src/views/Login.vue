@@ -19,7 +19,7 @@ export default {
   name: "Login",
   data() {
     return {
-      title: "Login",
+      title: "Log in",
       email: "",
       password: ""
     };

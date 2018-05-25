@@ -49,7 +49,6 @@ export default {
         alert("¯\_(ツ)_/¯ shit happens -- ", + err.message);
       });
 
-      // do some stuff like redirect somewhere ¯\_(ツ)_/¯
       this.$router.replace("Home");
     }
   }

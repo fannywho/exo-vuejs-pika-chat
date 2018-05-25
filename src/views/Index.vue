@@ -26,7 +26,6 @@ export default {
   name: 'Index',
   data () {
     return {
-      title: 'Index page !',
       messages: [],
       currentMessage: '',
       user: '',
@@ -58,6 +57,7 @@ export default {
   flex-direction: column;
   height: 80vh;
   overflow-y: auto;
+  margin-top: 2px;
 }
 .sticky-input {
   display: fixed;
